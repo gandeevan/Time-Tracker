@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "convex": "^0.12.2",
+    "react-native-get-random-values": "^1.8.0",
     "react-router-dom": "^6.10.0"
   },
   "devDependencies": {

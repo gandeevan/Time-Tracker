@@ -1,24 +1,56 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useQuery, useMutation } from "../convex/_generated/react";
+
+
+function validateForm(startTime = "", endTime = "", category = "") {
+
+  if (category === "") {
+    alert("Please select a category.");
+    return false;
+  }
+
+  if (startTime === "" || endTime === "") {
+    alert("Please select the start time and the end time.");
+    return false;
+  }
+
+  const startTimeMs = Date.parse(startTime);
+  const endTimeMs = Date.parse(endTime);
+
+  if (isNaN(startTimeMs) || isNaN(endTimeMs)) {
+    throw new Error("validateForm: invalid date");
+  }
+
+  if (startTimeMs >= endTimeMs) {
+    alert("Start time must be before end time.");
+    return false;
+  }
+
+  console.log("Validated form");
+  return true;
+}
 
 export default function TimeTracker({ categoryOptions }) {
 
-  const [startTime, setStartTime] = useState(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
-
-  const [endTime, setEndTime] = useState(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
-
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [category, setCategory] = useState("");
+  const categories = useQuery("getCategories");
+  const addEvent = useMutation("addEvent");
   const navigate = useNavigate();
 
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(`Start time: ${startTime}`);
-    console.log(`End time: ${endTime}`);
-    console.log(`Category: ${category}`);
+    e.preventDefault(startTime, endTime, category);
+    if (validateForm(startTime, endTime, category)) {
+      addEvent({ startTime: startTime, endTime: endTime, category: category });
+      navigate('/');
+    }
   }
 
   return (
-      <div className="center">
+    <div className="center">
       <form onSubmit={handleSubmit}>
         <label>
           Start Time:
@@ -34,16 +66,16 @@ export default function TimeTracker({ categoryOptions }) {
           Category:
           <select value={category} onChange={e => setCategory(e.target.value)}>
             <option value="" disabled>Select a category</option>
-            {categoryOptions.map(option => (
+            {categories && categories.length > 0 && categories.map(option => (
               <option key={option} value={option}>{option}</option>
             ))}
           </select>
-          <button type="button" onClick={() => navigate('/new-category')}>Add Category</button> {}
+          <button type="button" onClick={() => navigate('/new-category')}>Add Category</button> { }
         </label>
         <br />
         <br />
         <button type="submit">Submit</button>
       </form>
-        </div>
+    </div>
   );
 }

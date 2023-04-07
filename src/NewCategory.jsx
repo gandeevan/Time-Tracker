@@ -1,30 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from "../convex/_generated/react";
 
 export default function NewCategory({ setCategoryOptions }) {
   const [newCategory, setNewCategory] = useState('');
   const navigate = useNavigate();
+  const addCategory = useMutation("addCategories");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newCategory) {
-      setCategoryOptions(prevCategoryOptions => [...prevCategoryOptions, newCategory]);
+      console.log(`New category: ${newCategory}`);
+      addCategory({name: newCategory});
       navigate('/');
     }
   };
-  
+
   return (
     <div className="center">
       <form onSubmit={handleSubmit}>
         <label>
-          Category Name: 
+          Category Name:
           <input type="text" value={newCategory} onChange={(e) => setNewCategory(e.target.value)} />
         </label>
         <br />
-        <button type="submit">Submit</button> {}
+        <button type="submit">Submit</button> { }
       </form>
     </div>
   );
 }
 
-      
