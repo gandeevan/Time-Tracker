@@ -1,7 +1,56 @@
-
-.center {
+.center-category {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   height: 100vh;
+}
+
+.center-view-stats {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.center-btn {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.table {
+  margin-top: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #212529;
+  color: white;
+  font-weight: bold;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+  padding: 8px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+h1 {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
 }

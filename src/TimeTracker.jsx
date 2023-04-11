@@ -31,7 +31,7 @@ function validateForm(startTime = "", endTime = "", category = "") {
   return true;
 }
 
-export default function TimeTracker({ categoryOptions }) {
+export default function TimeTracker() {
 
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -49,8 +49,9 @@ export default function TimeTracker({ categoryOptions }) {
     }
   }
 
+
   return (
-    <div className="center">
+    <div className="center-category">
       <form onSubmit={handleSubmit}>
         <label>
           Start Time:
@@ -70,11 +71,19 @@ export default function TimeTracker({ categoryOptions }) {
               <option key={option} value={option}>{option}</option>
             ))}
           </select>
-          <button type="button" onClick={() => navigate('/new-category')}>Add Category</button> { }
         </label>
         <br />
         <br />
-        <button type="submit">Submit</button>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div>
+          <button type="submit">Submit</button>
+        </div>
+        <div>
+          <Link to="/new-category"> Add Category</Link>
+          <span> | </span>
+          <Link to="/view-stats"> View Stats</Link>
+        </div>
+      </div>
       </form>
     </div>
   );
